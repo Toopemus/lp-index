@@ -1,0 +1,13 @@
+version: "1"
+volumes:
+  psql:
+services:
+  psql:
+    image: postgres # latest version
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: salasana # ONLY in development !
+    volumes:
+      - psql:/var/lib/postgresql/data # save data between restarts
+    ports:
+      - 5555:5432 # binds port 5555 on your computer to the postgres port
