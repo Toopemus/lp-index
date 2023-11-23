@@ -1,15 +1,32 @@
 import { Router, Request, Response } from "express";
 import Artist from "../models/artist";
+import { TypedRequest } from "../utils/validation";
 
 const artistController: Router = Router();
 
-artistController.post("/", async (req: Request, res: Response) => {
-  const newArtist = await Artist.create({
-    ...req.body,
-  });
+interface IArtistRequest {
+  name: string;
+}
 
-  res.json(newArtist.toJSON());
-});
+artistController.post(
+  "/",
+  async (req: TypedRequest<IArtistRequest>, res: Response) => {
+    try {
+      const name = req.body.name;
+      const newArtist = await Artist.create({
+        name,
+      });
+
+      res.json(newArtist.toJSON());
+    } catch (error) {
+      if (error instanceof Error) {
+        res.status(400).json({error: error.message});
+      } else {
+        res.status(400)
+      }
+    }
+  }
+);
 
 artistController.get("/", async (req: Request, res: Response) => {
   const artists = await Artist.findAll({
