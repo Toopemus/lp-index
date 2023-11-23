@@ -4,7 +4,6 @@ import sequelize from "./db/connection";
 import albumController from "./controllers/albumController";
 import artistController from "./controllers/artistController";
 
-
 const app: Express = express();
 
 sequelize

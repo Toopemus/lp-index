@@ -1,6 +1,5 @@
 import { Router, Request, Response } from "express";
 import Artist from "../models/artist";
-import Album from "../models/album";
 
 const artistController: Router = Router();
 
