@@ -15,6 +15,9 @@ npm install
 # Dev database daemon
 docker compose up -d
 
+# Compile TypeScript files (you only need to do this on the first time)
+npx tsc
+
 # Dev server
 npm run dev
 ```
