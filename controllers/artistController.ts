@@ -1,32 +1,32 @@
-import { Router, Request, Response } from "express";
-import Artist from "../models/artist";
-import { TypedRequest } from "../utils/validation";
+import { Router, Request, Response } from "express"
+import Artist from "../models/artist"
+import { TypedRequest } from "../utils/validation"
 
-const artistController: Router = Router();
+const artistController: Router = Router()
 
 interface IArtistRequest {
-  name: string;
+  name: string
 }
 
 artistController.post(
   "/",
   async (req: TypedRequest<IArtistRequest>, res: Response) => {
     try {
-      const name = req.body.name;
+      const name = req.body.name
       const newArtist = await Artist.create({
         name,
-      });
+      })
 
-      res.json(newArtist.toJSON());
+      res.json(newArtist.toJSON())
     } catch (error) {
       if (error instanceof Error) {
-        res.status(400).json({error: error.message});
+        res.status(400).json({ error: error.message })
       } else {
         res.status(400)
       }
     }
-  }
-);
+  },
+)
 
 artistController.get("/", async (req: Request, res: Response) => {
   const artists = await Artist.findAll({
@@ -34,17 +34,17 @@ artistController.get("/", async (req: Request, res: Response) => {
       association: "albums",
       attributes: ["id", "name", "release_date"],
     },
-  });
+  })
 
-  res.json(artists);
-});
+  res.json(artists)
+})
 
 artistController.put("/:id", (req: Request, res: Response) => {
-  res.send("update artist");
-});
+  res.send("update artist")
+})
 
 artistController.delete("/:id", (req: Request, res: Response) => {
-  res.send("delete artist");
-});
+  res.send("delete artist")
+})
 
-export default artistController;
+export default artistController

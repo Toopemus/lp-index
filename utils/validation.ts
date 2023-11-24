@@ -1,7 +1,7 @@
-import { Request } from "express";
+import { Request } from "express"
 
 interface TypedRequest<T> extends Request {
-  body: T;
+  body: T
 }
 
-export { TypedRequest };
+export { TypedRequest }

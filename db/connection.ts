@@ -1,8 +1,8 @@
-import { Sequelize } from "sequelize";
-import { DATABASE_URI } from "../utils/config";
+import { Sequelize } from "sequelize"
+import { DATABASE_URI } from "../utils/config"
 
-const sequelize = new Sequelize(DATABASE_URI, { logging: false });
+const sequelize = new Sequelize(DATABASE_URI, { logging: false })
 
-void (async () => sequelize.sync({ force: true }))();
+void (async () => sequelize.sync({ force: true }))()
 
-export default sequelize;
+export default sequelize
