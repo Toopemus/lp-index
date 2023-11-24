@@ -1,6 +1,7 @@
 import { Router, Request, Response } from "express"
 import Album from "../models/album"
 import Artist from "../models/artist"
+import Track from "../models/track"
 import { TypedRequest } from "../utils/validation"
 
 const albumController: Router = Router()
@@ -9,6 +10,7 @@ interface IAlbumRequest {
   name: string
   release_date: string
   artist_id: number
+  tracks: string[]
 }
 
 /*
@@ -19,7 +21,7 @@ albumController.post(
   "/",
   async (req: TypedRequest<IAlbumRequest>, res: Response) => {
     try {
-      const { name, release_date, artist_id } = req.body
+      const { name, release_date, artist_id, tracks } = req.body
       const artist = await Artist.findByPk(artist_id, { rejectOnEmpty: true })
 
       if (!artist) {
@@ -30,6 +32,12 @@ albumController.post(
         name,
         release_date,
       })
+
+      const createdTracks: Track[] = await Promise.all(
+        tracks.map((track) => Track.create({ name: track })),
+      )
+
+      await newAlbum.addTracks(createdTracks)
 
       res.json(newAlbum.toJSON())
     } catch (error) {
@@ -45,7 +53,10 @@ albumController.post(
 albumController.get("/", async (req: Request, res: Response) => {
   const albums = await Album.findAll({
     attributes: ["id", "name", "release_date", "createdAt", "updatedAt"],
-    include: { association: "artist", attributes: ["id", "name"] },
+    include: [
+      { association: "artist", attributes: ["id", "name"] },
+      { association: "tracks", attributes: ["id", "name"] },
+    ],
   })
   res.json(albums)
 })
