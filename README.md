@@ -4,7 +4,7 @@ App for cataloging my personal [lp](https://en.wikipedia.org/wiki/LP_record) col
 
 ## Stack
 
-Express.js + TypeScript, Sequelize ORM
+Express.js, React + TypeScript
 
 ## Starting the app
 
