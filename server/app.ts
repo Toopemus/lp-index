@@ -1,4 +1,5 @@
 import express, { Express } from "express"
+import cors from "cors"
 import morgan from "morgan"
 import sequelize from "./db/connection"
 import albumController from "./controllers/albumController"
@@ -15,6 +16,7 @@ sequelize
     console.log("Error connecting to PostgreSQL:", error)
   })
 
+app.use(cors())
 app.use(express.json())
 app.use(morgan("dev"))
 
